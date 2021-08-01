@@ -10,17 +10,11 @@ require(tidyverse)
 require(tigerstats)
 require(knitr)
 GSS <-read.csv(file="GSScsv.csv",header=TRUE)
+library(dplyr)
+GSS <- GSS %>%
+mutate(across(where(is.character), as.factor))
 ```
-```{r}
-# this is the slick way to make chr variables into factor variables
-GSSN= select(GSS, ! is.numeric)
-GSSN=purrr::map(GSSN, as.factor)
-GSSN$X<-1:178
-#GSSN = data.frame(GSSN)
-GSS2=select(GSS, is.numeric)
-# merge two data frames by ID
-GSS <- merge(GSSN,GSS2,by="X")
-```
+
 
 # Introduction
 
@@ -51,7 +45,7 @@ barchartGC(~RACE + CAPPUN,data=GSS, type="percent")
 
 ```
 
-It appears that block are more against CAPPUN compared to other and white who are more in favor of CAPPUN.
+It appears that Black are more likely to be against CAPPUN compared to Other and White who are in favor of CAPPUN.
 
 
 ### Numerical Descriptive Results
